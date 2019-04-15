@@ -1,38 +1,64 @@
 import React from 'react';
-import data from './data.json';
-import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route,Link } from 'react-router-dom';
 
-export default class Id1 extends React.Component {
-    render() {
-        console.log(this.props.match.params.vidid);
-        const url = "https://www.youtube.com/embed/" + this.props.match.params.vidid;
-        return (
-            <div >
-                <iframe width="550" height="300" src={url} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-                </iframe>
-                
-                <div style={{ float: "right" }}>
-                    {data.map(function (video) {
-                        return <div>
-                            <Link to={"/" + video.vidid}>
-                                <img src={video.thumbnil} style={{
-                                    width: 250,
-                                    float: "right"
-                                }} > 
-                                </img>
-                                <div>
-                                    <p>{video.name}</p>
-                                    <p>Published By: {video.postedBy}</p>
-                                    <p>{video.views} Views</p>
-                                </div>
-                                <br />
-                                
-                            </Link>
-                        </div>
-                    }
-                    )}
-                </div>
-            </div>
-        )
-    }
+class App extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {users: []};
+		this.headers = [
+			{ key: 'userId', label: 'User ID' },
+			{ key: 'id', label: 'ID' },
+			{ key: 'title', label: 'Title' },
+			{ key: 'body', label: 'Body' }
+		];
+	}
+	componentDidMount() {
+		fetch('https://jsonplaceholder.typicode.com/posts')
+			.then(response => {
+				return response.json();
+			}).then(result => {
+				this.setState({
+					users:result
+				});
+			});
+  }
+  render() {                            
+		return (
+			<div>
+					{
+						this.headers.map(function(h) {
+							return (
+								<th key = {h.key}>{h.label}</th>
+							)
+						})
+					}
+			
+				{
+            this.state.users.map(function(item, key) {             
+						return (
+							<div>
+							<div>
+									<Link to={"/1"}>
+									{item.userId}
+                  </Link>
+									</div>
+								  <div>
+									<Link to={"/2"}>
+									{item.title}
+									</Link>
+									</div>
+								  <div>
+									<Link to={"/2"}>
+									{item.body}
+									</Link>
+									</div>
+							</div>
+							)
+						})
+					}
+         
+				</div>	
+		)
+	}
 }
+export default App;

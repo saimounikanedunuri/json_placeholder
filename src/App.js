@@ -8,8 +8,8 @@ function Example() {
     <Router>
       <Switch>
         {/* <Route path="/:id" render={(props) => <Id1 {...props} />} /> */}
-        <Route exact path="/" component={Id2} />
-        <Route path="/:vidid" component={Id1} />
+        <Route exact path="/" component={Id1} />
+        <Route path="/:id" component={Id2} />
       </Switch>
     </Router>
   );
